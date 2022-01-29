@@ -31,6 +31,12 @@
                     <p>Pages</p>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link :to="{name: 'dashboard.post.index'}" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>Posts</p>
+                </router-link>
+            </li>
           <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>

@@ -16,17 +16,17 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <div  v-for="page in pages.data" :key="page.id">
+                <div v-for="(post, index) in posts.data" :key="index">
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">{{ page.title }}</h2>
-                            <h3 class="post-subtitle">{{ page.content }}</h3>
-                        </a>
+                        <router-link :to="{name: 'post.detail', params:{slug: post.slug }}">
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <h3 class="post-subtitle">{{ post.content }}</h3>
+                        </router-link>
                         <p class="post-meta">
                             Posted by
                             <a href="#!">Start Bootstrap</a>
-                            on {{ page.created_at | displayDate }}
+                            on {{ post.created_at }}
 
                         </p>
                     </div>
@@ -44,32 +44,31 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    import { onMounted, ref } from 'vue'
     export default {
-        data() {
-            return {
-                pages: []
-            }
-        },
-        created() {
-            axios.defaults.headers.common['Content-Type'] = 'application/json'
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwt')
- 
-            this.axios
-                .get('/api/pages')
+        setup() {
+
+            //reactive state
+            let posts = ref([])
+
+            //mounted
+            onMounted(() => {
+
+                axios.get('http://localhost/api/posts')
                 .then(response => {
-                    console.log(response);
-                    this.pages = response.data;
-                });
-        },
-        methods: {
-            deletePage(id) { 
-                this.axios
-                    .delete(`/api/pages/${id}`)
-                    .then(response => {
-                        let i = this.pages.map(data => data.id).indexOf(id);
-                        this.pages.splice(i, 1)
-                    });
+                    posts.value = response.data
+
+                }).catch(error => {
+                    console.log(error.response)
+                })
+
+            })
+
+            return {
+                posts
             }
-        }
+
+        }   
     }
 </script>

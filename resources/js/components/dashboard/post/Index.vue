@@ -4,14 +4,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Page</h1>
+                    <h1 class="m-0 text-dark">Post</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
                         <router-link :to="{name: 'dashboard.index'}">Home</router-link>
                     </li>
-                    <li class="breadcrumb-item active">Page</li>
+                    <li class="breadcrumb-item active">Post</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -24,7 +24,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <router-link :to="{name: 'dashboard.page.create'}" class="btn btn-outline-primary">Add</router-link>
+                            <router-link :to="{name: 'dashboard.post.create'}" class="btn btn-outline-primary">Add</router-link>
                         </div>
                     </div>
                 </div>
@@ -40,14 +40,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(page, index) in pages.data" :key="index">
-                            <td>{{ page.id }}</td>
-                            <td>{{ page.title }}</td>
-                            <td>{{ page.content }}</td>
+                        <tr v-for="post in posts" :key="post.id">
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.content }}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <router-link :to="{name: 'dashboard.page.edit', params: { id: page.id }}" class="btn btn-outline-secondary">Edit</router-link>
-                                    <button class="btn btn-danger" @click="deletePage(page.id)">Delete</button>
+                                    <router-link :to="{name: 'dashboard.post.edit', params: { id: post.id }}" class="btn btn-success">Edit</router-link>
+                                    <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
                                 </div>
                             </td>
                         </tr>
@@ -68,14 +68,14 @@
         setup() {
 
             //reactive state
-            let pages = ref([])
+            let posts = ref([])
 
             //mounted
             onMounted(() => {
                
-                Http.get('/dashboard/pages')
+                Http.get('/dashboard/posts')
                 .then(response => {
-                    pages.value = response.data
+                    posts.value = response.data
                 }).catch(error => {
                     console.log(error.response)
                 })
@@ -84,10 +84,10 @@
 
             const deletePage = (id) => {
             
-            Http.delete(`/dashboard/pages/${id}`)
+            Http.delete(`/dashboard/posts/${id}`)
             .then(() => {
                         
-                pages.value.splice(pages.value.indexOf(id), 1);
+                posts.value.splice(posts.value.indexOf(id), 1);
 
                 }).catch(error => {
                     console.log(error.response)
@@ -96,7 +96,7 @@
             }
 
             return {
-                pages,
+                posts,
                 deletePage
             }
 

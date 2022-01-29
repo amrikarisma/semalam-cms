@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Page extends Model
+class Post extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
     

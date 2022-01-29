@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Page</h1>
+                    <h1 class="m-0 text-dark">Post</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -12,9 +12,9 @@
                         <router-link :to="{name: 'dashboard.index'}">Home</router-link>
                     </li>
                     <li class="breadcrumb-item">
-                        <router-link :to="{name: 'dashboard.page.index'}">Page</router-link>
+                        <router-link :to="{name: 'dashboard.post.index'}">Post</router-link>
                     </li>
-                    <li class="breadcrumb-item active">Page</li>
+                    <li class="breadcrumb-item active">Post</li>
                     </ol>
                 </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -24,15 +24,15 @@
         <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
-                    <form @submit.prevent="addPage">
+                <div class="col-md-6">
+                    <form @submit.prevent="addPost">
                         <div class="form-group">
                             <label>Title</label>
-                            <input type="text" class="form-control" v-model="page.title">
+                            <input type="text" class="form-control" v-model="post.title">
                         </div>
                         <div class="form-group">
                             <label>Content</label>
-                            <ckeditor :editor="editor" v-model="page.content"></ckeditor>
+                            <ckeditor :editor="editor" v-model="post.content"></ckeditor>
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -42,7 +42,7 @@
         </section>
     </div>
 </template>
-
+ 
 <script>
     import { reactive, ref } from 'vue'
     import { useRouter} from 'vue-router'
@@ -62,18 +62,18 @@
         
         setup() {
 
-            const page = reactive({
+            const post = reactive({
                 title: '',
                 content: ''
             })
             const router = useRouter()
             const validation = ref([])
 
-            const addPage = () => {
-                Http.post('/dashboard/pages', page)
+            const addPost = () => {
+                Http.post('/dashboard/posts', post)
                  .then((res) => {
                         router.push({
-                            name: 'dashboard.page.index'
+                            name: 'dashboard.post.index'
                         })
                     }).catch(error => {
                         validation.value = error.response.data
@@ -82,8 +82,8 @@
 
 
             return {
-                page,
-                addPage
+                post,
+                addPost
             }
 
         }   

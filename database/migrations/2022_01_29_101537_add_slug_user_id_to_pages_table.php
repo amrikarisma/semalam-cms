@@ -15,9 +15,11 @@ class AddSlugUserIdToPagesTable extends Migration
     {
         Schema::table('pages', function (Blueprint $table) {
             $table->string('slug', 180)->nullable()->after('title');
-            $table->unsignedBigInteger('user_id')->nullable()->after('content');
+            $table->unsignedBigInteger('created_by')->nullable()->after('content');
+            $table->unsignedBigInteger('updated_by')->nullable()->after('created_by');
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade');
 
         });
     }
@@ -31,9 +33,12 @@ class AddSlugUserIdToPagesTable extends Migration
     {
         Schema::table('pages', function (Blueprint $table) {
             Schema::disableForeignKeyConstraints();
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->dropForeign(['created_by']);
+            $table->dropColumn('created_by');
+            $table->dropForeign(['updated_by']);
+            $table->dropColumn('updated_by');
             Schema::enableForeignKeyConstraints();
+            $table->dropColumn('slug');
         });
     }
 }
