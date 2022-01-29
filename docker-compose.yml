@@ -82,7 +82,9 @@ services:
         ports:
           - 8081:80
         environment:
-          MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_USERNAME: "${DB_USERNAME}"
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            PMA_HOST: mysql
         links:
           - "mysql:db"
         depends_on:
