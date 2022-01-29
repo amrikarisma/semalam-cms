@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Dashboard\DashboardPageController;
+use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Frontend\PageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +16,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['middleware' => 'auth:api', 'prefix' => 'dashboard'], function(){
+    Route::get('users/{user}', [UserController::class, 'show']);
+    Route::resource('pages', DashboardPageController::class);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->group(function () {
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('register', [UserController::class, 'register']);
+    Route::get('pages', [PageController::class, 'index']);
+    Route::get('page/{id}', [PageController::class, 'show']);
+
+    
 });
