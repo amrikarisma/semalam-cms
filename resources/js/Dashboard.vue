@@ -1,5 +1,5 @@
 <template>
-      <router-view></router-view>
+      <router-view @setData="getData"></router-view>
 </template>
 <script>
   export default {

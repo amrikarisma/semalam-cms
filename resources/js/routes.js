@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import AppLayout from './components/layouts/AppLayout.vue';
 import DashboardLayout from './components/layouts/DashboardLayout.vue';
+import AuthLayout from './components/layouts/AuthLayout.vue';
 import Index from './components/frontend/Index.vue';
 import Login from './components/auth/Login.vue';
 import Register from './components/auth/Register.vue';
@@ -25,15 +26,14 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'index',
+                name: 'home',
                 component: Index,
             },
         ],
     },
     {
         path: '/login',
-        component: AppLayout,
-        meta: { guest: true },
+        component: AuthLayout,
         children: [
             {
                 path: '',
@@ -44,8 +44,7 @@ const routes = [
     },
     {
         path: '/register',
-        component: AppLayout,
-        meta: { guest: true },
+        component: AuthLayout,
         children: [
             {
                 path: '',
@@ -57,7 +56,6 @@ const routes = [
     {
         path: '/article/:slug',
         component: AppLayout,
-        meta: { guest: true },
         children: [
             {
                 path: '',
@@ -128,12 +126,14 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+    linkExactActiveClass: 'active',
+
 });
 
 router.beforeEach((to, from, next) => {  
     const token = localStorage.getItem('jwt') == null;  
     if (to.matched.some(record => record.meta.guest)) {
-      if (!token) next({ name: 'welcome' })
+      if (!token) next({ name: 'login' })
       else next()
     } 
     if (to.matched.some(record => record.meta.requiresAuth)) { 

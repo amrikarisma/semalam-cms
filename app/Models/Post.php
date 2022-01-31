@@ -19,6 +19,10 @@ class Post extends Model
         'updated_by'
     ];    
 
+    protected $with = [
+        'created_by', 'updated_by'
+    ];
+
     protected $guarded = [];
     
     public function sluggable(): array
@@ -28,5 +32,14 @@ class Post extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function created_by()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updated_by()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

@@ -5,7 +5,7 @@
   
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <router-view></router-view>
+      <router-view @setData="getData"></router-view>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">

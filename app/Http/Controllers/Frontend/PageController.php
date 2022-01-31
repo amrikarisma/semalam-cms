@@ -19,9 +19,9 @@ class PageController extends Controller
         return response()->json($pages);
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $slug)
     {
-        $pages = Page::where('id', $id)->first();
+        $pages = Page::where('slug', $slug)->first();
         return response()->json($pages);
     }
 

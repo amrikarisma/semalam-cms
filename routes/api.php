@@ -28,7 +28,7 @@ Route::middleware('api')->group(function () {
     Route::post('login', [UserController::class, 'login']);
     Route::post('register', [UserController::class, 'register']);
     Route::get('pages', [PageController::class, 'index']);
-    Route::get('page/{id}', [PageController::class, 'show']);
+    Route::get('pages/{slug}', [PageController::class, 'show']);
     Route::get('posts', [PostController::class, 'index']);
-    Route::get('post/{id}', [PostController::class, 'show']);
+    Route::get('posts/{slug}', [PostController::class, 'show']);
 });

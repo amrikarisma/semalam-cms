@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/login', function () {
+    return view('dashboard');
+})->where('any', '.*');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->where('any', '.*');

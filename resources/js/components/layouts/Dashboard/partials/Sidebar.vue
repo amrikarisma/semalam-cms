@@ -37,6 +37,9 @@
                     <p>Posts</p>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <a class="nav-link"  @click="logout"> Logout</a>
+            </li>
           <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
@@ -125,7 +128,7 @@
           localStorage.removeItem('jwt')
           localStorage.removeItem('user')
           this.getData()  
-          this.$router.push('/')
+          this.$router.push('/login')
       }
     }
   }
